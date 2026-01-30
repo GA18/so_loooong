@@ -6,7 +6,7 @@
 /*   By: g-alves- <g-alves-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 18:49:22 by g-alves-          #+#    #+#             */
-/*   Updated: 2026/01/28 17:09:42 by g-alves-         ###   ########.fr       */
+/*   Updated: 2026/01/29 22:27:16 by g-alves-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,30 @@
 
 typedef struct s_state
 {
-	char	**map;
-	int		width;
-	int		hight;
-	void	*mlx;
-	void	*win;
+	char		**map;
+	int			width;
+	int			height;
+	void		*mlx;
+	void		*win;
+	t_textures	texture;
 }	t_state;
+
+typedef struct s_properties
+{
+	void	*img;
+	int		width;
+	int		height;
+}	t_properties;
+
+typedef struct s_textures
+{
+	t_properties	background;
+	t_properties	character;
+	t_properties	collectible;
+	t_properties	wall;
+	t_properties	exit;
+}	t_textures;
+
 
 int	count_line_arq(char **argv, int count_line);
 int	close_window(void *param);
