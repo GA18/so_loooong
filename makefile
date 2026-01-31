@@ -3,22 +3,22 @@ NAME = so_long
 CC = cc
 CFLAGS = -g -Wall -Wextra -Werror
 
-# paths
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
 
 INCLUDES = -Iincludes -Ilibft
 
 MLX_DIR = minilibx-linux
-
 MLX = $(MLX_DIR)/libmlx_Linux.a
 
 SRCS = src/main.c \
        src/utils.c \
+	   src/render.c \
+	   src/init.c \
+	   src/cleanup.c
 
-OBJS = $(SRCS:.c=.o)
-
-# ===== rules =====
+OBJ_DIR = obj
+OBJS = $(SRCS:src/%.c=$(OBJ_DIR)/%.o)
 
 all: $(LIBFT) $(NAME) $(MLX)
 
@@ -31,18 +31,17 @@ $(MLX):
 $(NAME): $(OBJS) $(LIBFT) $(MLX)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(MLX) -lXext -lX11 -o $(NAME)
 
-%.o: %.c
+$(OBJ_DIR)/%.o: src/%.c
+	@mkdir -p $(OBJ_DIR)
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
-	rm -f $(OBJS)
+	rm -rf $(OBJ_DIR)
 	$(MAKE) -sC $(LIBFT_DIR) clean
 	$(MAKE) -sC $(MLX_DIR) clean
 
 fclean: clean
 	rm -f $(NAME)
-	$(MAKE) -sC $(LIBFT_DIR) fclean
-	$(MAKE) -sC $(MLX_DIR) fclean
 
 re: fclean all
 
