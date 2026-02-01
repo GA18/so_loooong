@@ -6,60 +6,54 @@
 /*   By: g-alves- <g-alves-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/31 14:17:43 by g-alves-          #+#    #+#             */
-/*   Updated: 2026/01/31 22:38:14 by g-alves-         ###   ########.fr       */
+/*   Updated: 2026/02/01 19:31:26 by g-alves-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
 static void	valid_content(char *line, t_textures *elements);
-static void	valid_border(char *line, t_textures *elements);
+static void	valid_border(char *line, t_textures *elements, int width);
 static void	valid_quantity(t_textures *elements);
 
-int	count_row_and_col_arq(char *arq_map, t_state *game)
+void	parser_and_validate_map(char *arq_map, t_state *game)
 {
 	int		fd;
 	char	*line;
-	char	*last_line;
 
 	fd = open(arq_map, O_RDONLY);
+	if (!fd)
+		ft_msg_error();
 	line = get_next_line(fd);
 	game->width = ft_strlen_line(line);
-	valid_map(line, &game->texture, 0);
 	while (line)
 	{
 		game->height++;
-		last_line = line;
+		free(line);
 		line = get_next_line(fd);
-		if (line && (int)ft_strlen_line(line) != game->width)
-			ft_msg_error();
-		if (line)
-			valid_map(line, &game->texture, game->height);
 	}
 	close(fd);
-	if (last_line)
-		valid_map(last_line, &game->texture, 0);
 	valid_quantity(&game->texture);
-	return (0);
 }
 
-void	valid_map(char *line, t_textures *elements, int borders)
+void	valid_map(char *line, t_textures *elements, int borders, int border_c)
 {
+
 	if (line[0] != elements->wall.tile
-		|| line[ft_strlen_line(line) - 1] != elements->wall.tile)
+		|| line[border_c] != elements->wall.tile)
 		ft_msg_error();
 	if (borders == 0)
-		valid_border(line, elements);
+		valid_border(line, elements, border_c);
 	if (borders != 0)
 		valid_content(line, elements);
 }
 
-static void	valid_border(char *line, t_textures *elements)
+static void	valid_border(char *line, t_textures *elements, int width)
 {
 	int	index;
 
 	index = 0;
-	while (index < ft_strlen_line(line) - 1)
+	while (index < width)
 		if (line[index++] != elements->wall.tile)
 			ft_msg_error();
 }

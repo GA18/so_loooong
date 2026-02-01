@@ -6,7 +6,7 @@
 /*   By: g-alves- <g-alves-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 18:49:22 by g-alves-          #+#    #+#             */
-/*   Updated: 2026/01/31 22:53:09 by g-alves-         ###   ########.fr       */
+/*   Updated: 2026/02/01 17:11:10 by g-alves-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <unistd.h>
 # include <stdarg.h>
 # include <fcntl.h>
+
+# define TILE_SIZE 64
 
 typedef struct s_properties
 {
@@ -48,14 +50,15 @@ typedef struct s_state
 	t_textures	texture;
 }	t_state;
 
-int		count_row_and_col_arq(char *arq_map, t_state *game);
+void	parser_and_validate_map(char *arq_map, t_state *game);
 int		close_window(void *param);
-int		load_all_texture(t_state *game, t_textures *texture);
 void	cleanup_and_exit(t_state *game);
 int		ft_init_game(t_state *game, char *arq_map);
 int		ft_msg_error(void);
 int		ft_strlen_line(const char *s);
-void	valid_map(char *line, t_textures *elements, int borders);
-int		render_map(t_state *game, t_properties prop, char *arq_map);
+void	valid_map(char *line, t_textures *elements, int borders, int border_c);
+int		render_map(t_state *game);
+int		ft_load_and_render(t_state *game);
+int		define_render_texture(t_state *game, t_textures *texture, int y, int x);
 
 #endif

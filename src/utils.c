@@ -6,7 +6,7 @@
 /*   By: g-alves- <g-alves-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 20:24:33 by g-alves-          #+#    #+#             */
-/*   Updated: 2026/01/31 15:34:03 by g-alves-         ###   ########.fr       */
+/*   Updated: 2026/02/01 15:44:24 by g-alves-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ int	close_window(void *param)
 	t_state	*game;
 
 	game = (t_state *)param;
-	exit(0);
+	cleanup_and_exit(game);
+	return (0);
 }
 
 int	ft_strlen_line(const char *s)

@@ -6,13 +6,29 @@
 /*   By: g-alves- <g-alves-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/30 22:45:56 by g-alves-          #+#    #+#             */
-/*   Updated: 2026/01/31 22:55:32 by g-alves-         ###   ########.fr       */
+/*   Updated: 2026/02/01 16:23:09 by g-alves-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
+static int	ft_define_window(t_state *game, char *arq_map);
+static int	ft_init_state(t_state *game);
+static int	ft_init_mlx(t_state *game);
+static int	ft_init_map(t_state *game, char *arq_map);
+
 int	ft_init_game(t_state *game, char *arq_map)
+{
+
+	ft_init_state(game);
+	ft_define_window(game, arq_map);
+	ft_init_map(game, arq_map);
+	ft_init_mlx(game);
+	ft_load_and_render(game);
+	return (1);
+}
+
+static int	ft_init_state(t_state *game)
 {
 	ft_bzero(game, sizeof(t_state));
 	game->texture.character.tile = 'P';
@@ -23,17 +39,54 @@ int	ft_init_game(t_state *game, char *arq_map)
 	game->texture.character.quantity = 0;
 	game->texture.collectible.quantity = 0;
 	game->texture.exit.quantity = 0;
-	count_row_and_col_arq(arq_map, game);
+	return (0);
+}
+
+static int	ft_define_window(t_state *game, char *arq_map)
+{
+	parser_and_validate_map(arq_map, game);
+	return (0);
+}
+
+static int	ft_init_mlx(t_state *game)
+{
 	game->mlx = mlx_init();
 	if (!game->mlx)
 		return (0);
-	game->win = mlx_new_window(game->mlx, 1000, 1000, "so_long");
+	game->win = mlx_new_window(game->mlx, (game->width * TILE_SIZE),
+			(game->height * TILE_SIZE), "so_long");
 	if (!game->win)
 		return (0);
-	mlx_hook(game->win, 17, 0, close_window, &game);
-	if (!load_all_texture(game, &game->texture))
-		ft_msg_error(); //cleanup_and_exit(game);
-	if (!render_map(game, game->texture.wall, arq_map))
-		ft_msg_error(); //cleanup_and_exit(game);
-	return (1);
+	mlx_hook(game->win, 17, 0, close_window, game);
+	//cleanup_and_exit(game);
+	return (0);
+}
+
+int	ft_init_map(t_state *game, char *arq_map)
+{
+	int		fd;
+	int		index_y;
+	char	*line;
+
+	fd = open(arq_map, O_RDONLY);
+	line = get_next_line(fd);
+	index_y = 0;
+	game->map = malloc(game->height * sizeof(char *));
+	game->map[index_y] = malloc(game->width * sizeof(char));
+	ft_memcpy(game->map[index_y], line, (size_t)game->width);
+	while (line)
+	{
+		free(line);
+		line = get_next_line(fd);
+		if (line)
+		{
+			index_y++;
+			game->map[index_y] = malloc(((game->width + 1) * sizeof(char)));
+			ft_memcpy(game->map[index_y], line, (size_t)game->width);
+		}
+		game->map[index_y][game->width] = '\0';
+
+	}
+	close(fd);
+	return (0);
 }
