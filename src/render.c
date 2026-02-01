@@ -6,7 +6,7 @@
 /*   By: g-alves- <g-alves-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 21:35:45 by g-alves-          #+#    #+#             */
-/*   Updated: 2026/01/31 15:03:39 by g-alves-         ###   ########.fr       */
+/*   Updated: 2026/01/31 22:56:18 by g-alves-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,14 @@ int	load_all_texture(t_state *game, t_textures *texture)
 	return (1);
 }
 
-// render_map(t_state *game, t_properties *prop_img, char *map_arq)
-// {
-	
-// }
-// char	*mlx_get_data_addr(void *img_ptr, int *bits_per_pixel,
-// 			   int *size_line, int *endian);
+int	render_map(t_state *game, t_properties prop, char *arq_map)
+{
+	int	load;
+
+	(void)arq_map;
+	load = mlx_put_image_to_window(game->mlx, game->win, prop.img, 0, 0);
+	if (!load)
+		return (0);
+	return (1);
+}
+

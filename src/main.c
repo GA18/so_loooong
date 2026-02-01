@@ -6,7 +6,7 @@
 /*   By: g-alves- <g-alves-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 18:42:12 by g-alves-          #+#    #+#             */
-/*   Updated: 2026/01/31 15:52:47 by g-alves-         ###   ########.fr       */
+/*   Updated: 2026/01/31 22:33:03 by g-alves-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,9 @@ int	main(int argc, char **argv)
 
 	if (argc < 2)
 		return (ft_msg_error());
-	// if (!ft_init_game(&game, argv[1]))
-	// 	return (ft_msg_error());
-	count_row_and_col_arq(argv, &game);
+	if (!ft_init_game(&game, argv[1]))
+		return (ft_msg_error());
 	ft_printf("\n%i, %i", game.height, game.width);
-	//mlx_loop(game.mlx);
+	mlx_loop(game.mlx);
 	return (0);
 }

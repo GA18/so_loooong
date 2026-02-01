@@ -6,7 +6,7 @@
 /*   By: g-alves- <g-alves-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/30 21:39:57 by g-alves-          #+#    #+#             */
-/*   Updated: 2026/01/31 15:09:52 by g-alves-         ###   ########.fr       */
+/*   Updated: 2026/01/31 22:34:13 by g-alves-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	cleanup_and_exit(t_state *game)
 int	ft_msg_error(void)
 {
 	write(2, "Error\n", 6);
-	return (0);
+	exit (0);
 }
 
 static	void	free_texture(void *mlx, t_textures *texture)

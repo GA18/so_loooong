@@ -6,7 +6,7 @@
 /*   By: g-alves- <g-alves-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 18:49:22 by g-alves-          #+#    #+#             */
-/*   Updated: 2026/01/31 16:20:20 by g-alves-         ###   ########.fr       */
+/*   Updated: 2026/01/31 22:53:09 by g-alves-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ typedef struct s_properties
 	void	*img;
 	int		width;
 	int		height;
+	int		quantity;
+	char	tile;
 }	t_properties;
 
 typedef struct s_textures
@@ -46,13 +48,14 @@ typedef struct s_state
 	t_textures	texture;
 }	t_state;
 
-int		count_row_and_col_arq(char **argv, t_state *game);
+int		count_row_and_col_arq(char *arq_map, t_state *game);
 int		close_window(void *param);
 int		load_all_texture(t_state *game, t_textures *texture);
 void	cleanup_and_exit(t_state *game);
-int		ft_init_game(t_state *game, char *map_arq);
+int		ft_init_game(t_state *game, char *arq_map);
 int		ft_msg_error(void);
 int		ft_strlen_line(const char *s);
-int		valid_map(char **argv, t_state *game);
+void	valid_map(char *line, t_textures *elements, int borders);
+int		render_map(t_state *game, t_properties prop, char *arq_map);
 
 #endif
