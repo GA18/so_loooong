@@ -43,6 +43,8 @@ clean:
 
 fclean: clean
 	rm -f $(NAME)
+	$(MAKE) -sC $(LIBFT_DIR) fclean
+	rm -f $(MLX)
 
 re: fclean all
 

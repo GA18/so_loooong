@@ -6,7 +6,7 @@
 /*   By: g-alves- <g-alves-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 20:24:33 by g-alves-          #+#    #+#             */
-/*   Updated: 2026/02/01 15:44:24 by g-alves-         ###   ########.fr       */
+/*   Updated: 2026/02/01 23:57:49 by g-alves-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,11 @@ int	close_window(void *param)
 
 int	ft_strlen_line(const char *s)
 {
-	int	length;
+	int		length;
 
 	length = 0;
-	while (*s)
+	while (*s && *s != '\n')
 	{
-		if (*s != '\n')
 			length++;
 		s++;
 	}
