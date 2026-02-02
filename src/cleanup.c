@@ -6,7 +6,7 @@
 /*   By: g-alves- <g-alves-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/30 21:39:57 by g-alves-          #+#    #+#             */
-/*   Updated: 2026/02/02 00:02:52 by g-alves-         ###   ########.fr       */
+/*   Updated: 2026/02/02 18:20:28 by g-alves-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,20 @@ static	void	destroy_texture(void *mlx, t_textures *texture);
 static	void	free_map(t_state *game);
 static	void	free_mlx(t_state *game);
 
-void	cleanup_and_exit(t_state *game)
+void	cleanup_and_exit(char *msg_error, t_state *game)
 {
 	destroy_texture(game->mlx, &game->texture);
 	free_map(game);
 	free_mlx(game);
+	if (*msg_error)
+	{
+		write(2, "\n", 1);
+		write(2, "\n", 1);
+		write(2, msg_error, ft_strlen(msg_error));
+		write(2, "\n", 1);
+		write(2, "\n", 1);
+		write(2, "\n", 1);
+	}
 	exit (1);
 }
 

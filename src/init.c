@@ -6,7 +6,7 @@
 /*   By: g-alves- <g-alves-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/30 22:45:56 by g-alves-          #+#    #+#             */
-/*   Updated: 2026/02/02 07:08:23 by g-alves-         ###   ########.fr       */
+/*   Updated: 2026/02/02 18:59:19 by g-alves-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ static int	ft_init_mlx(t_state *game);
 
 int	ft_init_game(t_state *game, char *arq_map)
 {
-
 	ft_init_state(game);
 	parser_controller(arq_map, game);
+	controller_flood(arq_map, game);
 	ft_init_mlx(game);
 	ft_load_and_render(game);
 	return (1);
@@ -49,33 +49,35 @@ static int	ft_init_mlx(t_state *game)
 	if (!game->win)
 		return (0);
 	mlx_hook(game->win, 17, 0, close_window, game);
+	//mlx_key_hook(game->win, key_esc, game);
 	return (0);
 }
 
-void	ft_init_map(t_state *game, char *arq_map)
+char	**ft_init_map(char *file, int height, int width)
 {
 	int		fd;
 	int		index_y;
 	char	*line;
+	char	**map;
 
-	fd = open(arq_map, O_RDONLY);
-	line = get_next_line(fd);
+	fd = open(file, O_RDONLY);
+	if (fd < 0)
+		return (NULL);
 	index_y = 0;
-	game->map = malloc((game->height + 1) * sizeof(char *));
-	game->map[index_y] = malloc((game->width + 1) * sizeof(char));
-	ft_memcpy(game->map[index_y], line, (size_t)game->width);
-	game->map[index_y][game->width] = '\0';
-	while (line)
+	map = malloc((height) * sizeof(char *));
+	if (!map)
+		return (NULL);
+	while (index_y < height)
 	{
-		free(line);
 		line = get_next_line(fd);
-		if (line)
-		{
-			index_y++;
-			game->map[index_y] = malloc(((game->width + 1) * sizeof(char)));
-			ft_memcpy(game->map[index_y], line, (size_t)game->width);
-		}
-		game->map[index_y][game->width] = '\0';
+		if (!line)
+			break ;
+		map[index_y] = malloc(((width + 1) * sizeof(char)));
+		ft_memcpy(map[index_y], line, (size_t)width);
+		map[index_y++][width] = '\0';
+		free(line);
 	}
+	get_next_line (-1);
 	close(fd);
+	return (map);
 }

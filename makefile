@@ -16,7 +16,8 @@ SRCS = src/main.c \
 	   src/render.c \
 	   src/init.c \
 	   src/cleanup.c \
-	   src/parser.c
+	   src/parser.c \
+	   src/flood_fill.c 
 
 OBJ_DIR = obj
 OBJS = $(SRCS:src/%.c=$(OBJ_DIR)/%.o)
