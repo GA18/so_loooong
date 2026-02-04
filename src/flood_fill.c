@@ -6,14 +6,13 @@
 /*   By: g-alves- <g-alves-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 08:29:50 by g-alves-          #+#    #+#             */
-/*   Updated: 2026/02/02 18:09:53 by g-alves-         ###   ########.fr       */
+/*   Updated: 2026/02/03 23:05:03 by g-alves-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-static int	find_point(char **map, t_properties *player);
-static int	flood_fill(t_textures *t, char **visit_map, int y, int x);
+static void	flood_fill(t_textures *t, char **visit_map, int y, int x);
 
 int	controller_flood(char *arq_map, t_state *game)
 {
@@ -23,8 +22,11 @@ int	controller_flood(char *arq_map, t_state *game)
 	visited_map = ft_init_map(arq_map, game->height, game->width);
 	find_point(game->map, &game->texture.character);
 	index = 0;
-	if (flood_fill(&game->texture, visited_map, game->texture.character.y,
-			game->texture.character.x) == 0)
+	game->texture.collectible.rest = game->texture.collectible.quantity;
+	flood_fill(&game->texture, visited_map, game->texture.character.y,
+		game->texture.character.x);
+	if (game->texture.collectible.rest > 0
+		|| game->texture.exit.accessible != 1)
 	{
 		while (index < game->height)
 			free(visited_map[index++]);
@@ -37,7 +39,7 @@ int	controller_flood(char *arq_map, t_state *game)
 	return (0);
 }
 
-static int	find_point(char **map, t_properties *player)
+int	find_point(char **map, t_properties *player)
 {
 	player->y = 0;
 	while (map[player->y])
@@ -54,22 +56,19 @@ static int	find_point(char **map, t_properties *player)
 	return (0);
 }
 
-static int	flood_fill(t_textures *t, char **visit_map, int y, int x)
+static void	flood_fill(t_textures *t, char **visit_map, int y, int x)
 {
-	if (visit_map[y][x] == t->wall.tile || visit_map[y][x] == 'V')
-		return (0);
+	if (visit_map[y][x] == t->wall.tile || visit_map[y][x] == 'V'
+		|| (t->exit.accessible == 1 && t->collectible.rest > 0))
+		return ;
 	if (visit_map[y][x] == t->collectible.tile)
-		t->collectible.quantity--;
-	if (visit_map[y][x] == t->exit.tile && t->collectible.quantity == 0)
-		return (1);
-	visit_map[y][x] = 'V';
-	if (flood_fill (t, visit_map, (y + 1), x))
-		return (1);
-	if (flood_fill (t, visit_map, (y - 1), x))
-		return (1);
-	if (flood_fill (t, visit_map, y, (x + 1)))
-		return (1);
-	if (flood_fill (t, visit_map, y, (x - 1)))
-		return (1);
-	return (0);
+		t->collectible.rest--;
+	if (visit_map[y][x] == t->exit.tile)
+		t->exit.accessible = 1;
+	if (visit_map[y][x] != t->exit.tile)
+		visit_map[y][x] = 'V';
+	flood_fill (t, visit_map, (y + 1), x);
+	flood_fill (t, visit_map, (y - 1), x);
+	flood_fill (t, visit_map, y, (x + 1));
+	flood_fill (t, visit_map, y, (x - 1));
 }

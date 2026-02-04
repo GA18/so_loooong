@@ -6,7 +6,7 @@
 /*   By: g-alves- <g-alves-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/30 22:45:56 by g-alves-          #+#    #+#             */
-/*   Updated: 2026/02/02 18:59:19 by g-alves-         ###   ########.fr       */
+/*   Updated: 2026/02/03 21:45:14 by g-alves-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ static int	ft_init_state(t_state *game)
 	game->texture.character.quantity = 0;
 	game->texture.collectible.quantity = 0;
 	game->texture.exit.quantity = 0;
+	game->texture.exit.accessible = 0;
+	game->texture.character.quantity = 0;
 	return (0);
 }
 
@@ -49,7 +51,7 @@ static int	ft_init_mlx(t_state *game)
 	if (!game->win)
 		return (0);
 	mlx_hook(game->win, 17, 0, close_window, game);
-	//mlx_key_hook(game->win, key_esc, game);
+	mlx_hook(game->win, 2, 1, keyboard_press, game);
 	return (0);
 }
 

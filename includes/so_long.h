@@ -6,7 +6,7 @@
 /*   By: g-alves- <g-alves-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 18:49:22 by g-alves-          #+#    #+#             */
-/*   Updated: 2026/02/02 17:57:06 by g-alves-         ###   ########.fr       */
+/*   Updated: 2026/02/03 19:40:42 by g-alves-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,9 @@ typedef struct s_properties
 	int		y;
 	int		x;
 	int		quantity;
+	int		rest;
 	char	tile;
+	int		accessible;
 }	t_properties;
 
 typedef struct s_textures
@@ -52,6 +54,21 @@ typedef struct s_state
 	t_textures	texture;
 }	t_state;
 
+// typedef enum e_keyboard
+// {
+// 	KEY_ESC = 65307,
+// 	KEY_W = 119,
+// 	KEY_S = 115,
+// 	KEY_A = 97,
+// 	KEY_D = 100,
+// }	t_keyboard;
+
+# define KEY_ESC 65307
+# define KEY_W 119
+# define KEY_S 115
+# define KEY_A 97
+# define KEY_D 100
+
 void	parser_controller(char *arq_map, t_state *game);
 void	read_map(char *arq_map, t_state *game);
 int		close_window(void *param);
@@ -65,5 +82,7 @@ int		ft_load_and_render(t_state *game);
 int		define_render_texture(t_state *game, t_textures *texture, int y, int x);
 char	**ft_init_map(char *file, int height, int width);
 int		controller_flood(char *arq_map, t_state *game);
+int		keyboard_press(int keycode, t_state *game);
+int		find_point(char **map, t_properties *player);
 
 #endif

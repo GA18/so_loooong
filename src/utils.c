@@ -6,7 +6,7 @@
 /*   By: g-alves- <g-alves-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 20:24:33 by g-alves-          #+#    #+#             */
-/*   Updated: 2026/02/02 18:59:14 by g-alves-         ###   ########.fr       */
+/*   Updated: 2026/02/03 18:58:21 by g-alves-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,6 @@ int	close_window(void *param)
 	cleanup_and_exit("Obrigado por jogar Yu-gi-oh! So_looong!!!", game);
 	return (0);
 }
-
-// int	key_esc(void *param)
-// {
-// 	if ()
-// }
 
 int	ft_strlen_line(const char *s)
 {

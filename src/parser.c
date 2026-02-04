@@ -6,7 +6,7 @@
 /*   By: g-alves- <g-alves-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/31 14:17:43 by g-alves-          #+#    #+#             */
-/*   Updated: 2026/02/02 18:06:49 by g-alves-         ###   ########.fr       */
+/*   Updated: 2026/02/03 15:57:45 by g-alves-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,11 @@
 
 static void	valid_content(t_state *game, t_textures *elements);
 static void	valid_border(t_state *game, t_textures *elements);
-//static void	valid_line(t_state *game);
 
 void	parser_controller(char *arq_map, t_state *game)
 {
 	read_map(arq_map, game);
 	game->map = ft_init_map(arq_map, game->height, game->width);
-	//valid_line(game);
 	valid_border(game, &game->texture);
 	valid_content(game, &game->texture);
 	if (game->texture.character.quantity != 1
@@ -49,7 +47,7 @@ void	read_map(char *arq_map, t_state *game)
 			free(line);
 			get_next_line(-1);
 			close(fd);
-			cleanup_and_exit("All columns must be the same length.", game);
+			cleanup_and_exit("This is not a valid rectangle!", game);
 		}
 		game->height++;
 		free(line);
@@ -58,22 +56,10 @@ void	read_map(char *arq_map, t_state *game)
 	close(fd);
 }
 
-// static void	valid_line(t_state *game)
-// {
-// 	int	y;
-
-// 	y = 0;
-// 	while (y < game->height)
-// 	{
-// 		if (!(ft_strlen_line(game->map[y]) == game->width))
-// 			cleanup_and_exit(game);
-// 		y++;
-// 	}
-// }
-
 static void	valid_border(t_state *game, t_textures *elements)
 {
 	int	x;
+	int	y;
 
 	x = 0;
 	while (x < game->width)
@@ -83,6 +69,14 @@ static void	valid_border(t_state *game, t_textures *elements)
 		if (!(game->map[game->height - 1][x] == elements->wall.tile))
 			cleanup_and_exit("Border Down must only wall", game);
 		x++;
+	}
+	y = 0;
+	while (y < game->height)
+	{
+		if (game->map[y][0] != elements->wall.tile
+			|| game->map[y][game->width - 1] != elements->wall.tile)
+			cleanup_and_exit("All borders must be walls.", game);
+		y++;
 	}
 }
 
