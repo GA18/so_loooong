@@ -6,7 +6,7 @@
 /*   By: g-alves- <g-alves-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 16:23:44 by g-alves-          #+#    #+#             */
-/*   Updated: 2026/02/03 22:55:37 by g-alves-         ###   ########.fr       */
+/*   Updated: 2026/02/04 12:42:50 by g-alves-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,12 @@ static void	ft_move_player(t_state *game, t_textures *t, int p_x, int p_y)
 	if (game->map[t->character.y + p_y][t->character.x + p_x]
 		== t->collectible.tile)
 		t->collectible.quantity--;
+	if (game->map[t->character.y + p_y][t->character.x + p_x]
+		== t->exit.tile && t->collectible.quantity == 0)
+		cleanup_and_exit("Parabéns! Você finalizou o game!", game);
+	if (game->map[t->character.y + p_y][t->character.x + p_x]
+		== t->exit.tile && t->collectible.quantity != 0)
+		ft_printf("Colete todos os itens antes de sair\n");
 	if (game->map[t->character.y + p_y][t->character.x + p_x] != t->wall.tile
 	&& game->map[t->character.y + p_y][t->character.x + p_x] != t->exit.tile)
 	{
@@ -45,10 +51,4 @@ static void	ft_move_player(t_state *game, t_textures *t, int p_x, int p_y)
 		define_render_texture(game, t, t->character.y, t->character.x);
 		ft_printf("Movimento de número: %i\n", t->character.quantity++);
 	}
-	if (game->map[t->character.y + p_y][t->character.x + p_x]
-		== t->exit.tile && t->collectible.quantity == 0)
-		cleanup_and_exit("Parabéns! Você finalizou o game!", game);
-	if (game->map[t->character.y + p_y][t->character.x + p_x]
-		== t->exit.tile && t->collectible.quantity != 0)
-		ft_printf("Colete todos os itens antes de sair\n");
 }

@@ -6,7 +6,7 @@
 /*   By: g-alves- <g-alves-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/30 21:39:57 by g-alves-          #+#    #+#             */
-/*   Updated: 2026/02/02 18:20:28 by g-alves-         ###   ########.fr       */
+/*   Updated: 2026/02/04 01:17:42 by g-alves-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,11 @@ static	void	destroy_texture(void *mlx, t_textures *texture)
 
 static	void	free_map(t_state *game)
 {
-	int	y;
+	int	i;
 
-	y = 0;
-	while (y < game->height && game->map)
-		free(game->map[y++]);
+	i = 0;
+	while (i < game->height && game->map)
+		free(game->map[i++]);
 	free(game->map);
 }
 
