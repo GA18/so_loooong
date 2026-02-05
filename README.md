@@ -11,7 +11,7 @@ The project focuses on understanding **event-driven programming**, **basic game 
 
 All maps are provided via a `.ber` file and must respect strict validation rules defined in the project specification.
 
-## Game Rules
+### Game Rules
 
 - The player must collect **all collectibles (`C`)** before exiting.
 - The game ends successfully when the player reaches the exit (`E`) after collecting everything.
@@ -19,7 +19,7 @@ All maps are provided via a `.ber` file and must respect strict validation rules
 - The player can move using keyboard inputs (W/A/S/D or arrow keys).
 - Pressing `ESC` or closing the window exits the game cleanly.
 
-## Map Requirements
+### Map Requirements
 
 The map is provided as a `.ber` file and must follow these rules:
 
@@ -43,5 +43,55 @@ Any invalid map must result in an error message and program termination.
 
 To compile the project, run:
 
-```bash
+```
 make
+```
+This will generate the executable so_long.
+
+Execution
+Run the game by passing a valid map file with the .ber extension:
+
+```
+./so_long maps/example.ber
+```
+
+### Customized Testing
+
+You can use an automated test that I created myself during development:
+
+Download the tester.sh file from my GitHub.
+
+https://github.com/GA18/so_loooong/blob/master/tester.sh
+
+ ⚠️ **Make sure to save it in the root of the so_looong folder** (do not put it in any other folder). It is available at the link below...
+
+After that, simply run the project as follows:
+
+```
+./tester.sh
+```
+
+This script will run all the maps located in the maps/valid and maps/invalid folders one by one, starting with the invalid maps.
+
+- When it reaches the valid maps, they will be opened one at a time so you can play and verify they are correct.
+
+- Once you reach the exit, the next valid map will open automatically until all maps have been tested.
+
+- If you do not wish to play a specific map, you can simply press ESC to close the game, but the tester will proceed to the next available map.
+
+ ### WARNING ⚠️ ⚠️
+
+Make sure the file has the necessary permissions to run
+
+```
+chmod +rx tester.sh
+```
+## Resources
+
+Website for converting images to XPM:
+- https://convertio.co/
+
+AI was used to assist in the technical explanation of concepts such as flood_fill and, primarily, to accelerate learning regarding MiniLibX functions and generating maps valid and invalid for test.
+
+- https://chatgpt.com
+- https://gemini.google.com
