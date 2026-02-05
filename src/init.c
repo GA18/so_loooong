@@ -6,7 +6,7 @@
 /*   By: g-alves- <g-alves-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/30 22:45:56 by g-alves-          #+#    #+#             */
-/*   Updated: 2026/02/04 12:44:15 by g-alves-         ###   ########.fr       */
+/*   Updated: 2026/02/04 19:28:43 by g-alves-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ static int	ft_init_state(t_state *game)
 	game->texture.character.quantity = 0;
 	game->texture.collectible.quantity = 0;
 	game->texture.exit.quantity = 0;
-	game->texture.exit.accessible = 0;
 	game->texture.character.quantity = 0;
 	return (0);
 }
